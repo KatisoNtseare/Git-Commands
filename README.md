@@ -88,6 +88,11 @@ git push origin feature/backend/add-login-api
 
 ### Step 7 — Keep branch updated
 
+git checkout main
+git pull origin main          # Update local main with the latest remote changes
+git checkout feature/<branch> # Switch back to your feature branch
+git merge main                # Merge the latest main into your feature branch
+
 ```bash
 git checkout main
 git pull origin main
