@@ -1,6 +1,4 @@
----
-
-# Educore LMS – GitHub Branch Workflow Guide (Complete)
+## Educore LMS – GitHub Branch Workflow Guide (Complete)
 
 > A complete, beginner-friendly but professional Git workflow for the Educore LMS project.
 > Use this guide every time you work on the repo.
