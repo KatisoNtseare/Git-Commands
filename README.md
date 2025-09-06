@@ -1,358 +1,319 @@
+---
+
 # Educore LMS – GitHub Branch Workflow Guide (Complete)
 
-> A complete, developer-ready reference for cloning, branching, working, PRs, merging and cleaning up for the Educore LMS project.
+> A complete, beginner-friendly but professional Git workflow for the Educore LMS project.
+> Use this guide every time you work on the repo.
 
 ---
 
-## Table of contents
-1. Step-by-step workflow (Clone → Merge → Cleanup)
-2. Branching rules & naming conventions
-3. Common cases and commands
-4. Pull Request (PR) checklist & template
+## 📑 Table of Contents
+
+1. Overview: How we work
+2. Step-by-step workflow
+3. Branching rules & naming conventions
+4. Commit message rules
 5. Branches I created (backend & frontend)
-6. "When you have a task" — quick action checklist
-7. Merge & conflict resolution steps
-8. Troubleshooting & tips
-9. Quick reference cheat sheet & printable checklist
+6. Pull Request (PR) checklist & template
+7. Merge & conflict resolution flow
+8. Troubleshooting common mistakes
+9. Quick reference cheat sheet
+10. Example workflows (backend & frontend)
 
 ---
 
-## 1) Step-by-step workflow (developer-friendly)
+## 1) Overview – How We Work
 
-### Step 1 — Clone the repository (first-time setup)
-Cloning downloads a copy of the repository to your local machine.
+* **`main` branch** → stable, production-ready code.
+* **Feature branches (`feature/...`)** → where all development happens.
+* Work only in your feature branch, never directly on `main`.
+* Always keep your branch up to date with `main` before PR.
+* Every change must go through a **Pull Request (PR)** → code review → merge → cleanup.
+
+---
+
+## 2) Step-by-step Workflow (Developer Flow)
+
+### Step 1 — Clone repo (first time only)
 
 ```bash
 git clone https://github.com/KatisoNtseare/Educore-LMS-Assignment-2.git
 cd Educore-LMS-Assignment-2
 ```
 
-> You now have a local copy. Work will be done on feature branches, not `main`.
+### Step 2 — Update main
 
-### Step 2 — Check available branches
 ```bash
-git branch -a
+git checkout main
+git pull origin main
 ```
-- `main` — stable/production-ready code
-- `feature/...` — active feature branches
 
 ### Step 3 — Create or switch to your feature branch
-**Never work on `main`.** Always use a feature branch.
 
-**If branch exists on GitHub but not locally:**
+* If branch exists on GitHub but not locally:
+
 ```bash
 git checkout -b feature/backend/add-login-api origin/feature/backend/add-login-api
 ```
-- `-b` creates local branch and sets it to track the remote.
 
-**If branch exists locally:**
+* If branch exists locally:
+
 ```bash
 git checkout feature/backend/add-login-api
 ```
 
-**If branch does not exist anywhere and you want to create & push:**
+* If creating a new branch from main:
+
 ```bash
 git checkout -b feature/backend/my-feature
 git push -u origin feature/backend/my-feature
 ```
 
-### Step 4 — Make your changes
-- Open backend in Visual Studio or frontend in VS Code.
-- Implement code changes, save files.
+### Step 4 — Make changes
 
-**NB:** When pushing or pulling, we recommend VS/IDE closed to avoid file locks — but you can still work with Git while editors are open; the note is a team preference to avoid accidental conflicts.
+* Open project in IDE (Visual Studio, VS Code).
+* Implement changes, save files.
 
-### Step 5 — Stage & commit changes
+### Step 5 — Commit changes
+
 ```bash
-git add .
-# OR add specific files: git add path/to/file
-
+# Stage everything (new, updated, deleted)
+git add -A
 git commit -m "Add login API endpoint"
 ```
-**Commit message conventions:** use imperative tense and be descriptive: `Add`, `Fix`, `Update`, `Remove`.
 
-### Step 6 — Push your branch to GitHub
+### Step 6 — Push branch
+
 ```bash
 git push origin feature/backend/add-login-api
-# OR when creating new branch: git push -u origin feature/backend/my-feature
 ```
 
-### Step 7 — Pull latest changes before new work
-If you're on a feature branch and want updates from main:
-```bash
-git pull origin main        # from main into current branch (if on main first)
-# OR
-git pull origin feature/backend/add-login-api  # pull remote updates for your current branch
-```
+### Step 7 — Keep branch updated
 
-### Step 8 — Create a Pull Request (PR)
-1. GitHub → your branch → Pull Request → New Pull Request
-2. Base: `main`, Compare: your `feature/...` branch
-3. Add description and link relevant issues
-4. Request one or more reviewers
-5. After approval, **Merge** into `main`
-
-### Step 9 — Clean up after merge
 ```bash
 git checkout main
 git pull origin main
-git branch -d feature/backend/add-login-api           # delete locally
-git push origin --delete feature/backend/add-login-api # delete remote
-```
-
-**If you need to keep the branch for further work, do not delete.**
-
----
-
-## 2) Branching rules & naming conventions
-Use clear, consistent names. Examples:
-- Feature branches: `feature/{area}/{short-description}`
-  - `feature/backend/authentication`
-  - `feature/frontend/dashboard-navigation`
-- Hotfix / bug: `hotfix/{descr}`
-- Release: `release/{version}` (if used)
-
-**Good:** `feature/backend/add-login-api`
-**Avoid:** short/ambiguous names like `fix2` or `katiso_branch`
-
----
-
-## 3) Common Cases (NB cases) — and commands
-
-### Case 1 — Local branch already exists (error on -b)
-If you run `git checkout -b feature/...` and see:
-```
-fatal: A branch named 'feature/backend/add-login-api' already exists.
-```
-**Solution:** switch to it:
-```bash
 git checkout feature/backend/add-login-api
+git merge main
 ```
 
-### Case 2 — Branch exists on GitHub but not locally
+### Step 8 — Open Pull Request
+
+* GitHub → New Pull Request
+* Base: `main` | Compare: your `feature/...` branch
+* Fill in PR template (see section 6)
+* Request review
+
+### Step 9 — Merge & cleanup
+
+After approval:
+
 ```bash
-git checkout -b feature/backend/add-login-api origin/feature/backend/add-login-api
+git checkout main
+git pull origin main
+git branch -d feature/backend/add-login-api
+git push origin --delete feature/backend/add-login-api
 ```
-This creates the local branch and sets it to track the remote branch.
-
-### Case 3 — Branch exists both locally and on GitHub
-```bash
-git checkout feature/backend/add-login-api
-git pull origin feature/backend/add-login-api
-```
-
-### In all cases
-- **Don’t create a local branch if it already exists remotely.**
-- If branch exists on remote but not locally, use `git checkout -b <branch> origin/<branch>`.
-- Always `git pull` before starting work to avoid conflicts.
 
 ---
 
-## 4) Pull Request (PR) checklist & template
-Use a PR template for fast reviews.
+## 3) Branching Rules & Naming Conventions
 
-**PR checklist:**
-- [ ] Branch is up-to-date with `main` (merged locally)
-- [ ] Tests (if any) pass locally
-- [ ] No debug/logging statements left
-- [ ] Run linting / formatters
-- [ ] Add or update documentation or README if needed
-- [ ] Request reviewer(s)
+**General format:**
 
-**Suggested PR description template:**
+```
+feature/<area>/<short-description>
+hotfix/<short-description>
+release/<version>
+```
+
+Examples:
+
+* `feature/backend/authentication`
+* `feature/frontend/dashboard-navigation`
+* `hotfix/backend/fix-null-error`
+
+❌ Avoid names like `fix2`, `johns-branch`.
+
+---
+
+## 4) Commit Message Rules
+
+Use **imperative tense** + **clear description**.
+
+Examples:
+✅ `Add login API`
+✅ `Fix null reference in UserService`
+✅ `Update student dashboard UI`
+❌ `fixed stuff`
+❌ `update code`
+
+---
+
+## 5) Branches I Created (Backend & Frontend)
+
+### Backend Branches
+
+| Feature                                  | Branch Name                              |
+| ---------------------------------------- | ---------------------------------------- |
+| Role-based authentication                | feature/backend/authentication           |
+| Admin: CRUD Users (Students & Lecturers) | feature/backend/admin-user-management    |
+| Admin: Courses & Modules                 | feature/backend/course-module-management |
+| Lecturer: Task Management                | feature/backend/lecturer-tasks           |
+| Student: Task Status Update & Filtering  | feature/backend/student-tasks            |
+| Search Functionality                     | feature/backend/search                   |
+| Database Migrations                      | feature/backend/migrations               |
+
+### Frontend Branches
+
+| Feature                          | Branch Name                               |
+| -------------------------------- | ----------------------------------------- |
+| Authentication Pages             | feature/frontend/authentication           |
+| Dashboard & Navigation           | feature/frontend/dashboard-navigation     |
+| Admin: User Management UI        | feature/frontend/admin-user-management    |
+| Courses & Modules UI             | feature/frontend/course-module-management |
+| Lecturer: Task Management UI     | feature/frontend/lecturer-tasks           |
+| Student: Task Status & Filtering | feature/frontend/student-tasks            |
+| Search Functionality             | feature/frontend/search                   |
+
+---
+
+## 6) Pull Request (PR) Checklist & Template
+
+### ✅ PR checklist
+
+* [ ] Branch updated with `main`
+* [ ] Tests (if any) pass locally
+* [ ] No debug/logging left (`console.log`, `print`)
+* [ ] Linting / formatting applied
+* [ ] Documentation updated if needed
+* [ ] Reviewer requested
+
+### 📝 PR template
+
 ```
 Title: [Feature] Add login API endpoint
 
 Summary:
-- What: Add login API endpoint for user authentication
-- Why: Allow students/lecturers to login and receive JWT
-- How: New controller, service, DB migration
+- Added login API endpoint for user authentication
+- Users receive JWT token after login
 
 Testing:
-- How I tested locally
-- Any unit tests added
+- Tested with Postman, valid/invalid credentials
 
 Notes:
-- Any manual steps or migrations required
+- Requires DB migration: Add User table
 
-Reviewer notes:
-- Areas to focus on during review
+Reviewer Notes:
+- Check error handling in AuthController
 ```
 
 ---
 
-## 5) Branches I created (backend & frontend)
+## 7) Merge & Conflict Resolution Flow
 
-### Backend branches
-| Feature | Branch Name |
-|---|---|
-| Role-based authentication | feature/backend/authentication |
-| Admin: CRUD Users (Students & Lecturers) | feature/backend/admin-user-management |
-| Admin: Courses & Modules | feature/backend/course-module-management |
-| Lecturer: Task Management | feature/backend/lecturer-tasks |
-| Student: Task Status Update & Filtering | feature/backend/student-tasks |
-| Search Functionality | feature/backend/search |
-| Database Migrations | feature/backend/migrations |
+1. Update main:
 
-### Frontend branches
-| Feature | Branch Name |
-|---|---|
-| Authentication Pages | feature/frontend/authentication |
-| Dashboard & Navigation | feature/frontend/dashboard-navigation |
-| Admin: User Management UI | feature/frontend/admin-user-management |
-| Courses & Modules UI | feature/frontend/course-module-management |
-| Lecturer: Task Management UI | feature/frontend/lecturer-tasks |
-| Student: Task Status & Filtering | feature/frontend/student-tasks |
-| Search Functionality | feature/frontend/search |
-
----
-
-## 6) To do when you have a task (step-by-step)
-1. Make sure you're on the correct branch
-   - `git status` — shows current branch and staged changes
-   - `git checkout feature/backend/<branch-name>`
-   - OR if the branch exists on GitHub but not locally:
-     `git checkout -b feature/backend/<branch-name> origin/feature/backend/<branch-name>`
-2. Pull latest changes from GitHub for your branch
-   - `git pull origin feature/backend/<branch-name>`
-3. Pull latest changes from `main` and merge into your branch
-   - `git checkout main`
-   - `git pull origin main`
-   - `git checkout feature/backend/<branch-name>`
-   - `git merge main`
-4. Resolve conflicts (if any)
-   - Edit conflicting files
-   - `git add <file>` for resolved files
-   - `git commit -m "Resolve conflict: <file>"
-5. Push updates after merging
-   - `git push origin feature/backend/<branch-name>`
-
----
-
-## 7) Merge & conflict resolution — full flow
-**Before merging to main on GitHub:**
-1. Ensure your feature branch is up to date with `main` locally:
-   ```bash
-   git checkout main
-   git pull origin main
-   git checkout feature/backend/<branch-name>
-   git merge main
-   ```
-2. Resolve merge conflicts:
-   - Open conflict file(s), fix the conflicting code
-   - `git add <file>`
-   - `git commit -m "Resolve merge conflicts before PR"
-   ```
-3. Push the resolved branch:
-   ```bash
-   git push origin feature/backend/<branch-name>
-   ```
-4. Open PR on GitHub (Reviewer will confirm, approve, then merge)
-
-**After merging on GitHub:**
 ```bash
 git checkout main
 git pull origin main
-# Delete branch locally and remotely
-git branch -d feature/backend/<branch-name>
-git push origin --delete feature/backend/<branch-name>
 ```
 
-**If you are allowed to merge locally into main (only when agreed):**
+2. Merge into your feature branch:
+
+```bash
+git checkout feature/backend/add-login-api
+git merge main
+```
+
+3. If conflicts:
+
+   * Open conflict files in IDE
+   * Fix manually (choose correct code)
+   * `git add <file>`
+   * `git commit -m "Resolve merge conflict in <file>"`
+4. Push branch again:
+
+```bash
+git push origin feature/backend/add-login-api
+```
+
+5. Create/Update PR → Review → Merge.
+
+---
+
+## 8) Troubleshooting Common Mistakes
+
+* **Accidentally worked on `main`**
+
+  ```bash
+  git checkout -b feature/fix-commit
+  git push origin feature/fix-commit
+  ```
+* **Forgot to set upstream for new branch**
+
+  ```bash
+  git push -u origin feature/my-branch
+  ```
+* **Branch already exists locally**
+
+  ```bash
+  git checkout feature/my-branch
+  ```
+* **Undo last commit (keep changes)**
+
+  ```bash
+  git reset --soft HEAD~1
+  ```
+
+---
+
+## 9) Quick Reference Cheat Sheet
+
+| Action                  | Command                             |
+| ----------------------- | ----------------------------------- |
+| Clone repo              | `git clone <url>`                   |
+| List all branches       | `git branch -a`                     |
+| Switch branch           | `git checkout <branch>`             |
+| Create new branch       | `git checkout -b <branch>`          |
+| Pull updates            | `git pull origin <branch>`          |
+| Merge main into feature | `git merge main`                    |
+| Stage all changes       | `git add -A`                        |
+| Commit                  | `git commit -m "Message"`           |
+| Push                    | `git push origin <branch>`          |
+| Delete local branch     | `git branch -d <branch>`            |
+| Delete remote branch    | `git push origin --delete <branch>` |
+
+---
+
+## 10) Example Workflows
+
+### Backend example
+
 ```bash
 git checkout main
 git pull origin main
-git merge feature/backend/<branch-name>
-git push origin main
+git checkout -b feature/backend/student-tasks
+# work on code...
+git add -A
+git commit -m "Implement student task submission"
+git push origin feature/backend/student-tasks
 ```
-> Only do the above when the team agreed—otherwise use PRs on GitHub.
 
----
+### Frontend example
 
-## 8) Troubleshooting & tips
-- **`git status` is your friend** — use it frequently.
-- If you accidentally committed to `main` and pushed:
-  - Prefer `git revert <commit>` to undo a commit safely.
-  - **Do not** force-push to `main` unless the team explicitly agrees.
-- If `git checkout -b` fails: switch instead: `git checkout <branch>`.
-- To set upstream for local branch:
-  ```bash
-  git push -u origin feature/backend/<branch-name>
-  ```
-- To rename a local branch:
-  ```bash
-  git branch -m old-name new-name
-  git push origin :old-name new-name
-  git push -u origin new-name
-  ```
-- If you see merge conflicts after merging main:
-  - Resolve in IDE/editor, `git add`, `git commit`, `git push`.
-
-**Why close VS when pulling/pushing?**
-- Sometimes IDEs lock files or auto-restore state that conflicts with Git operations; closing reduces chance of locked files and accidental commits. If you prefer to keep it open, just be mindful of any auto-save/format-on-save hooks.
-
----
-
-## 9) Quick reference cheat sheet & printable checklist
-
-### Action → Command
-| Action | Command |
-|---|---|
-| Check branch | `git status` |
-| List local branches | `git branch` |
-| List local & remote | `git branch -a` |
-| Switch to branch | `git checkout <branch>` |
-| Create & track remote branch | `git checkout -b <branch> origin/<branch>` |
-| Create new local branch & push | `git checkout -b <branch>` → `git push -u origin <branch>` |
-| Pull remote for current branch | `git pull origin <branch>` |
-| Pull main | `git pull origin main` |
-| Merge main into feature | `git checkout <branch>` → `git merge main` |
-| Stage changes | `git add .` or `git add <file>` |
-| Commit changes | `git commit -m "Message"` |
-| Push branch | `git push origin <branch>` |
-| Delete local branch | `git branch -d <branch>` |
-| Delete remote branch | `git push origin --delete <branch>` |
-
-### Printable checklist — before opening PR
-- [ ] Branch name follows convention
-- [ ] Branch up-to-date with `main`
-- [ ] Unit tests pass (if any)
-- [ ] No debug logs
-- [ ] Linting passed
-- [ ] PR description is clear
-- [ ] Reviewer requested
-
----
-
-## Appendix — small useful examples
-**Set branch to track remote after creating it locally:**
 ```bash
-git push -u origin feature/backend/my-feature
-```
-
-**Revert a bad commit (safe):**
-```bash
-git revert <commit-hash>
-# Creates a new commit which undoes the changes in <commit-hash>
-```
-
-**Force push (DANGEROUS — avoid unless agreed):**
-```bash
-git push --force origin <branch>
+git checkout main
+git pull origin main
+git checkout -b feature/frontend/dashboard-navigation
+# edit React code...
+git commit -am "Add sidebar navigation for student dashboard"
+git push origin feature/frontend/dashboard-navigation
 ```
 
 ---
 
-### Final note
-This document consolidates the entire workflow you supplied plus practical additions: branch naming, PR template, commit message guidance, conflict resolution, and a cheat sheet to hand to new teammates. Use this as the canonical workflow for Educore LMS.
+## Final Note
 
-> If you'd like, I can:
-> - export this to PDF for sharing,
-> - produce a one-page flow diagram for onboarding,
-> - or convert this into a `CONTRIBUTING.md` for the repo.
-
-
----
-
-*Document last updated: Sep 6, 2025*
-
+This guide is the **official Educore LMS Git workflow**.
+Follow it step-by-step. If stuck  run `git status`, check this doc.
