@@ -1,4 +1,6 @@
-%% ProIT System Use Case Diagram (Fixed for GitHub/Markdown)
+%% ===========================================
+%% ProIT System Use Case Diagram (GitHub Safe)
+%% ===========================================
 
 flowchart LR
     %% === Define Actors ===
@@ -11,15 +13,15 @@ flowchart LR
 
     %% === System Boundary ===
     subgraph ProIT_System [ProIT System]
-        UC1(Request Project)
-        UC2(Make Payment)
-        UC3(Develop Software)
-        UC4(Deploy Application)
-        UC5(Provide Training)
-        UC6(Consult Client)
-        UC7(Generate Report)
-        UC8(Manage User Accounts)
-        UC9(Provide Support)
+        UC1([Request Project])
+        UC2([Make Payment])
+        UC3([Develop Software])
+        UC4([Deploy Application])
+        UC5([Provide Training])
+        UC6([Consult Client])
+        UC7([Generate Report])
+        UC8([Manage User Accounts])
+        UC9([Provide Support])
     end
 
     %% === Actor Interactions ===
@@ -42,6 +44,6 @@ flowchart LR
     UC1 -.-> UC9:::extend
     UC6 -.-> UC1:::extend
 
-    %% === Legend/Styles ===
-    classDef include stroke-dasharray: 5 5,stroke:#0a0,color:#0a0;
-    classDef extend stroke-dasharray: 5 5,stroke:#00a,color:#00a;
+    %% === Styles for include/extend ===
+    classDef include stroke-dasharray: 5 5,stroke:#008000,color:#008000;
+    classDef extend stroke-dasharray: 5 5,stroke:#0000ff,color:#0000ff;
