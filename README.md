@@ -1,15 +1,7 @@
-# ProIT System Use Case Diagram
-
-```mermaid
-%% ProIT System Use Case Diagram
-%% Paste this into any Mermaid-enabled markdown viewer
-
----
-title: ProIT System Use Case Diagram
----
+%% ProIT System Use Case Diagram (Fixed for GitHub/Markdown)
 
 flowchart LR
-    %% Define Actors
+    %% === Define Actors ===
     Client((Client))
     Developer((Developer))
     DevOps((DevOps Engineer))
@@ -17,7 +9,7 @@ flowchart LR
     Consultant((Consultant))
     Admin((Admin))
 
-    %% Define System Boundary
+    %% === System Boundary ===
     subgraph ProIT_System [ProIT System]
         UC1(Request Project)
         UC2(Make Payment)
@@ -30,7 +22,7 @@ flowchart LR
         UC9(Provide Support)
     end
 
-    %% Actor Interactions
+    %% === Actor Interactions ===
     Client --- UC1
     Client --- UC2
     Client --- UC9
@@ -42,15 +34,14 @@ flowchart LR
     Admin --- UC7
     Admin --- UC8
 
-    %% Include Relationships
+    %% === Include Relationships ===
     UC1 -.-> UC2:::include
     UC3 -.-> UC4:::include
 
-    %% Extend Relationships
+    %% === Extend Relationships ===
     UC1 -.-> UC9:::extend
     UC6 -.-> UC1:::extend
 
-    %% Styling for clarity
+    %% === Legend/Styles ===
     classDef include stroke-dasharray: 5 5,stroke:#0a0,color:#0a0;
     classDef extend stroke-dasharray: 5 5,stroke:#00a,color:#00a;
-```
